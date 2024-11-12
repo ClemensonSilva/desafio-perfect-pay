@@ -38,10 +38,11 @@ class ProductController extends Controller
 
   public function showDashboard()
   {
+    $controllerSale = new Sales();
+    $controllerClient = new ClientController();
     $products = $this->get_products_data();
-    $clients = json_encode(DB::table('client')->orderBy('name')->get());
-    $controller = new Sales();
-    $sales = json_encode($controller->get_sales_data()->forPage(1, 10));
+    $clients = $controllerClient->getClients();
+    $sales = json_encode($controllerSale->get_sales_data()->forPage(1, 10));
     return view('dashboard', compact('products', 'sales', 'clients'));
   }
 

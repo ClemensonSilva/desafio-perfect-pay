@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ClientController extends Controller
 {
@@ -20,5 +22,12 @@ class ClientController extends Controller
 
         Client::create($inputForm);
         return redirect('/sales');
+    }
+
+    public function getClients(){
+        $clients = Cache::remember('clients', 60*30, function(){
+            return DB::table('client')->orderBy('name')->get();
+        });
+        return json_encode($clients);
     }
 }
