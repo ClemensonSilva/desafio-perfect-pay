@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 // guardar data no DB
 function aplicacao_banco_de_dados_($date_from_app)
@@ -19,12 +20,11 @@ function banco_de_dados_aplicacao($date_from_db)
 
 function get_especific_sales_by_client_product($search, $pagination = 5)
 {
-
     $result = DB::table('client_products')
         ->join('client', 'client_products.client_id', '=', 'client.id')
         ->join('products', 'client_products.product_id', '=', 'products.id')
-        ->where('client.name', '=', $search)
-        ->orWhere('products.name', '=', $search)
+        ->where('client.name', 'like', "%{$search}%")
+        ->orWhere('products.name', 'like', "%{$search}%")
         ->select(
             'client_products.*',
             'client.name as client_name',
@@ -49,15 +49,6 @@ function get_sales_betwen_dates($initialDate, $finalDate)
     return $sales;
 }
 
-function get_products_data($id=false)
-{
-    if($id){
-        $products = DB::table('products')->where('id', $id)->get();
-    }else{
-        $products = DB::table('products')->orderBy('name')->paginate(10);
-    }
-    return json_encode($products);
-}
 function validandoDesconto($productPrice, $discount){
     if($discount >= $productPrice ){
          $discount = $productPrice*0.1;

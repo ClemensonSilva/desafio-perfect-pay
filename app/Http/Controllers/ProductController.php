@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
@@ -34,7 +35,7 @@ class ProductController extends Controller
 }     
 
       public function showDashboard(){
-        $products = get_products_data();
+        $products = $this->get_products_data();
         $clients = json_encode(DB::table('client')->orderBy('name')->get());
         $controller = new Sales();
         $sales = json_encode($controller->get_sales_data()->forPage(1,10));
@@ -70,12 +71,16 @@ class ProductController extends Controller
       
 function get_products_data($id=false)
 {
-    if($id){
-        $products = DB::table('products')->where('id', $id)->get();
+  if($id){
+    $products = Cache::remember('products-dashboard', 60*60, function($id){
+            return DB::table('products')->where('id', $id)->get();
+        });
     }else{
-        $products = DB::table('products')->orderBy('name')->paginate(10);
+        $products = Cache::remember('products-dashboard', 60*60, function(){
+           return DB::table('products')->orderBy('name')->paginate(10);
+        });
     }
-    return json_encode($products);
+    return $products;
 }
       
 }
