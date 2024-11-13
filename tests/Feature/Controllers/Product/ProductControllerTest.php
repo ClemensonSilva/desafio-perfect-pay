@@ -93,7 +93,8 @@ class ProductUpdate extends TestCase
         $this->actingAs($admin)->withSession(['role_id' => '1', 'user_id' => '7']);
        
         $product_controler = new ProductController();
-        $response = $product_controler->get_products_data(1);
+        $id = 1;
+        $response = $product_controler->get_products_data($id);
         $this->assertJson($response);
         
     }

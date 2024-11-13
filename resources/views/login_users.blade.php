@@ -30,7 +30,22 @@
             </div>
             <button type="submit" class="btn btn-primary">Entrar</button>
             <br>
+            
         </form>
+        <div class="form-group">
+          <h2>Login para exemplo de uso da aplicação</h2>
+          <div class="form-group">
+            <p>Login para Admin</p>
+            <p>cristianomessi@gmail.com</p>
+            <p>atum1234</p>
+          </div>
+          <div class="form-group">
+            <p>Login para usuário</p>
+            <p>neymarmbappe@gmail.com</p>
+            <p>salmao12</p>
+          </div>
+
+        </div>
 </div>
 
 @endsection

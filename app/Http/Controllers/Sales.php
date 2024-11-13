@@ -95,7 +95,8 @@ class Sales extends Controller
     {
         $inputForm = $request->validate(['search' => 'required']);
         $search = $inputForm['search'];
-        $products = get_products_data();
+        $producContoller = new ProductController();
+        $products = $producContoller->get_products_data();
         $sales = json_encode(get_especific_sales_by_client_product($search));
 
         return view('dashboard', compact('products','sales', ))->with(['message','Resultados encontrados']);
@@ -109,7 +110,8 @@ class Sales extends Controller
         $initialDate = aplicacao_banco_de_dados_($initialDate);
         $finalDate = aplicacao_banco_de_dados_($finalDate);
 
-        $products = get_products_data();
+        $producContoller = new ProductController();
+        $products = $producContoller->get_products_data();
         $sales = $this->get_sales_betwen_dates($initialDate, $finalDate);
         
         return view('dashboard', compact('products','sales', ))->with(['message','Resultados encontrados']);
