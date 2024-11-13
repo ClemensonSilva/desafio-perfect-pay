@@ -65,7 +65,7 @@ class ProductController extends Controller
     $productName = $input['name'];
     $productDescription = $input['description'];
     $productPrice = $input['price'];
-    DB::table('products')->where('id', $id)->update(['name'=> $productName, 'description' => $productDescription, 'price'=> $productPrice]);
+    DB::table('products')->where('id', $id->id)->update(['name'=> $productName, 'description' => $productDescription, 'price'=> $productPrice]);
     Cache::forget('products-dashboard');    
     return redirect('/')->with(['message' =>  'Produto atualizado com sucesso!']);
   }
@@ -80,7 +80,7 @@ class ProductController extends Controller
   function get_products_data($id = false)
   {
     if ($id) {
-      $products = Cache::remember('products-dashboard', 60 * 60, function ($id) {
+      $products = Cache::remember('products-dashboard', 60 * 60, function () use ($id){
         return DB::table('products')->where('id', $id)->get();
       });
     } else {

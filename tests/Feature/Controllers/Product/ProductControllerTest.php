@@ -9,7 +9,7 @@ use App\Models\Users;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Cache;
 use Tests\TestCase;
 
 # php artisan test --filter=ProductUpdate
@@ -25,7 +25,7 @@ class ProductUpdate extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->arrayToCreateProducts = ['name' => 'Iphone 7','description' => 'O melhor móvel da atualidade',
+        $this->arrayToCreateProducts = ['name' => 'Iphone 7','description' => 'O melhor movel da atualidade',
         'price' => '800',];
         $this->productTest = Product::factory()->create($this->arrayToCreateProducts);
         $this->productForUpdateTest = ['name' => 'Iphone 15','description' => 'Esse sim é o melhor.',
@@ -95,6 +95,7 @@ class ProductUpdate extends TestCase
         $product_controler = new ProductController();
         $id = 1;
         $response = $product_controler->get_products_data($id);
+        dump($response);
         $this->assertJson($response);
         
     }
