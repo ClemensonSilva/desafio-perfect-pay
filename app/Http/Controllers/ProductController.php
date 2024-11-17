@@ -32,7 +32,8 @@ class ProductController extends Controller
   public function showSales()
   {
     $products = $this->get_products_data();
-    $clients = json_encode(DB::table('client')->paginate(10));
+    $controllerClient = new ClientController();
+    $clients = json_encode($controllerClient->getClients());
     return view('crud_sales', compact('products', 'clients'));
   }
 
@@ -81,11 +82,11 @@ class ProductController extends Controller
   {
     if ($id) {
       $products = Cache::remember('products-dashboard', 60 * 60, function () use ($id){
-        return DB::table('products')->where('id', $id)->get();
+        return DB::select('select * from products where id = ?',[$id]);
       });
     } else {
       $products = Cache::remember('products-dashboard', 60 * 60, function () {
-        return DB::table('products')->orderBy('name')->paginate(10);
+        return DB::select('select * from products LIMIT 10 OFFSET 0');
       });
     }
     return json_encode($products);
