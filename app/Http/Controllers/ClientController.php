@@ -26,8 +26,8 @@ class ClientController extends Controller
 
     public function getClients(){
         $clients = Cache::remember('clients', 60*30, function(){
-            return DB::select('select * FROM clients ORDER BY name');
+            return DB::select('select * FROM client ORDER BY name');
         });
-        return json_encode($clients);
+        return $clients;
     }
 }

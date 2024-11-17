@@ -43,7 +43,7 @@ class ProductController extends Controller
     $controllerClient = new ClientController();
     $products = $this->get_products_data();
     $clients = $controllerClient->getClients();
-    $sales = json_encode($controllerSale->get_sales_data()->forPage(1, 10));
+    $sales = ($controllerSale->get_sales_data());
     return view('dashboard', compact('products', 'sales', 'clients'));
   }
 
@@ -82,7 +82,7 @@ class ProductController extends Controller
   {
     if ($id) {
       $products = Cache::remember('products-dashboard', 60 * 60, function () use ($id){
-        return DB::select('select * from products where id = ?',[$id]);
+        return DB::select("select * from products where id = {$id}");
       });
     } else {
       $products = Cache::remember('products-dashboard', 60 * 60, function () {

@@ -5,7 +5,7 @@
   
     @php
             $sale = json_decode($sale);
-            $products = json_decode($products)->data;
+            $products = json_decode($products);
 
     @endphp
     <div class='card'>

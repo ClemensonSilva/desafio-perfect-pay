@@ -14,7 +14,7 @@
 </div>
 @endif
 @php
-    $products = json_decode($products)->data;
+    $products = json_decode($products);
     $sales = json_decode($sales);
     
     @endphp

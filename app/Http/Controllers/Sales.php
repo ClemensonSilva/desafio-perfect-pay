@@ -51,9 +51,10 @@ class Sales extends Controller
     }
     public function dataToEditSales($id)
     {
-        $products = json_encode(DB::table('products')->paginate(10));
+        $controllerProduct = new ProductController();
+        $products = ($controllerProduct->get_products_data());
 
-        $sale = json_encode($this->get_sales_data($id));
+        $sale = $this->get_sales_data($id);
         return view('edit_sales',compact( 'sale', 'products')); // parei aqui
     }
     public function editSale(Request $request, $id)
@@ -93,9 +94,9 @@ class Sales extends Controller
     //LEMBRAR DE CRIAR JSON
     public function search(Request $request)
     {
+        $producContoller = new ProductController();
         $inputForm = $request->validate(['search' => 'required']);
         $search = $inputForm['search'];
-        $producContoller = new ProductController();
         $products = $producContoller->get_products_data();
         $sales = json_encode(get_especific_sales_by_client_product($search));
 
@@ -120,25 +121,19 @@ class Sales extends Controller
    public function get_sales_data($id = false, $paginate = 10)
 {
     if ($id) {
-        $sales =  DB::table('client_products')
-            ->join('client', 'client_products.client_id', '=', 'client.id')
-            ->join('products', 'client_products.product_id', '=', 'products.id')
-            ->select(
-                'client_products.*',
-                'client.name as client_name',
-                'products.name as products_name',
-                'products.price as products_price'
-            )
-            ->where('client_products.id', '=',  $id)
-            ->first();
+        $sales =  DB::select('select client_products.*, client.name as client_name,
+        products.name as products_name, products.price as products_price FROM 
+        client_products  INNER JOIN client ON client_products.client_id = client.id  
+        INNER JOIN products ON client_products.product_id = products.id WHERE client_products.id = :id LIMIT 1', ['id'=>$id]);
+        $sales = $sales[0];
     } else {
-        $sales = DB::table('client_products')
-            ->join('client', 'client_products.client_id', '=', 'client.id')
-            ->join('products', 'client_products.product_id', '=', 'products.id')
-            ->select('client_products.*', 'client.name as client_name', 'products.name as products_name', 'products.price as products_price')
-            ->get();
+        $sales = DB::select('select client_products.*, client.name as client_name,
+         products.name as products_name, products.price as products_price FROM 
+         client_products INNER JOIN client ON client_products.client_id =  client.id  
+         INNER JOIN products ON client_products.product_id = products.id LIMIT :paginate OFFSET 0',['paginate'=>$paginate]);
+        
     }
-    return $sales;
+    return json_encode($sales);
 }
 function get_sales_betwen_dates($initialDate, $finalDate)
 {

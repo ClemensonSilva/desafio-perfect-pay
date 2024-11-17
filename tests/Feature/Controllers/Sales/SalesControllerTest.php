@@ -70,9 +70,9 @@ class SalesController extends TestCase
         $request = Request::create(route('sales.edit', ['sale'=>1]), 'PUT', $this->newSaleArray);
         
         $sale = new Sales();
-        $saleId = $sale->get_sales_data(1)->id; // quero atualizar o primeiro elemento de vendas 
+        $saleId = $sale->get_sales_data(1); // quero atualizar o primeiro elemento de vendas 
         $response = $sale->editSale($request, $saleId);
-
+        dump($);
         $corretFormat = $sale->aplicacao_banco_de_dados_($this->newSaleArray['date']);
         $this->newSaleArray['date'] = $corretFormat;
         $this->assertDatabaseHas('client_products', $this->newSaleArray);
