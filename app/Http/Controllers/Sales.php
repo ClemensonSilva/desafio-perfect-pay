@@ -91,9 +91,10 @@ class Sales extends Controller
         return redirect('/')->with(['message','Edicao feita com sucesso!']);
     }
     function getClientNames(Request $request){
+        $clientController = new ClientController();
         $inputForm = $request->validate(['search' => 'required']);
-        $client = DB::select("SELECT * FROM client WHERE name LIKE CONCAT ('%', :name, '%')", ['name'=>$inputForm['search']]);
-        return json_encode($client);
+        $client = $clientController->searchClient($inputForm['search']);
+        return $client;
     }
 
     //LEMBRAR DE CRIAR JSON

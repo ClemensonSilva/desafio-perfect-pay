@@ -30,4 +30,8 @@ class ClientController extends Controller
         });
         return $clients;
     }
+    public function searchClient($clientName){
+        $client = DB::select("SELECT * FROM client WHERE name LIKE CONCAT ('%', :name, '%')", ['name'=>$clientName]);
+        return json_encode($client);
+    }
 }
