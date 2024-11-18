@@ -34,6 +34,7 @@
                             </div>
                             <input type="text" class="form-control  " id="search" name="search">
                         </div>
+                        <p id="result">ola</p>
                     </div>
                     <div class="col-sm-1 my-1">
                         <button type="submit" class="btn btn-primary" style='padding: 14.5px 16px;'>
@@ -190,3 +191,35 @@
         </div>
     </div>
 @endsection
+<html>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js" 
+    integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+
+    <script>
+        function searchByClient(search){
+            return $.ajax({
+                type: "GET",
+                url: "/search/client",
+                data: {
+                    'search': search
+                },
+                dataType: "json",
+            });
+        }
+        $(document).ready(function (){
+            $("#search").on('keyup', function () {
+                $("#result").html($(this).val());
+                var search = $(this).val();
+            if(search != ''){
+
+                searchByClient(search).then((result) => {
+                    console.log(result);
+                }).catch((err) => {
+                    
+                });
+            }
+            })
+
+        })
+    </script>
+</html>

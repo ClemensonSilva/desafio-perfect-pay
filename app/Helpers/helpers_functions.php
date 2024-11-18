@@ -34,6 +34,7 @@ function get_especific_sales_by_client_product($search, $pagination = 5)
     return $result;
 }
 
+
 function get_sales_betwen_dates($initialDate, $finalDate)
 {
     $sales = DB::table('client_products')

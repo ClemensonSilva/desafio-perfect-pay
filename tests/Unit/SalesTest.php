@@ -57,4 +57,6 @@ class SalesTest extends TestCase
         $result = $controllerTest->salesPrice($quantity,$productDiscount, $productPrice);
         $this->assertEquals(550, $result);
     }
+
+    
 }

@@ -90,6 +90,11 @@ class Sales extends Controller
 
         return redirect('/')->with(['message','Edicao feita com sucesso!']);
     }
+    function getClientNames(Request $request){
+        $inputForm = $request->validate(['search' => 'required']);
+        $client = DB::select("SELECT * FROM client WHERE name LIKE CONCAT ('%', :name, '%')", ['name'=>$inputForm['search']]);
+        return json_encode($client);
+    }
 
     //LEMBRAR DE CRIAR JSON
     public function search(Request $request)
@@ -121,13 +126,13 @@ class Sales extends Controller
    public function get_sales_data($id = false, $paginate = 10)
 {
     if ($id) {
-        $sales =  DB::select('select client_products.*, client.name as client_name,
+        $sales =  DB::select('SELECT client_products.*, client.name as client_name,
         products.name as products_name, products.price as products_price FROM 
         client_products  INNER JOIN client ON client_products.client_id = client.id  
         INNER JOIN products ON client_products.product_id = products.id WHERE client_products.id = :id LIMIT 1', ['id'=>$id]);
         $sales = $sales[0];
     } else {
-        $sales = DB::select('select client_products.*, client.name as client_name,
+        $sales = DB::select('SELECT client_products.*, client.name as client_name,
          products.name as products_name, products.price as products_price FROM 
          client_products INNER JOIN client ON client_products.client_id =  client.id  
          INNER JOIN products ON client_products.product_id = products.id LIMIT :paginate OFFSET 0',['paginate'=>$paginate]);
