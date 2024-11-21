@@ -33,18 +33,22 @@
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Clientes</div>
                             </div>
-                            <input type="text" class="form-control  " id="search" name="search">
+                            <input type="text" class="form-control  " id="search" >
                         </div>
-                        
+                    </div>
+                   
+                </div>
+                <div class="form-row align-items-center">
+                    <div class="col-sm-5 my-1">
+                        <select id="container" class="form-control" name="search">
+        
+                        </select>   
                     </div>
                     <div class="col-sm-1 my-1">
                         <button type="submit" class="btn btn-primary" style='padding: 14.5px 16px;'>
                             <i class='fa fa-search'></i>
                         </button>
                     </div>
-                </div>
-                <div id="container">
-
                 </div>
             </form>
             <form action="/searchWithDate" method="GET">
@@ -70,11 +74,10 @@
                     <div class="col-sm-1 my-1">
                         <button type="submit" class="btn btn-primary" style='padding: 14.5px 16px;'>
                             <i class='fa fa-search'></i>
-                        </button>
+                        </button>   
                     </div>
                 </div>
             </form>
-
             <table class='table'>
                 <tr>
                     <th scope="col">
@@ -200,7 +203,7 @@
     integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
 
 <script>
-    function searchByClient(search) {
+    function searchClient(search) {
         return $.ajax({
             type: "GET",
             url: "/search/client",
@@ -216,7 +219,7 @@
         result.forEach(client => {
             i++;
             var client = result[i - 1]['cpf'];
-            const newParag = $('<p>', {
+            const newParag = $('<option>', {
                 id: 'result' + i,
                 text: result[i - 1]['name'],
                 style: 'margin: 10px'
@@ -228,6 +231,11 @@
             });
         });
     }
+    $("#container").on('change', function () {
+        var selectedValue = $(this).val();
+        var selectedText = $(this).find('option:selected').text();
+        $("#search").val(selectedText)
+    })
     $(document).ready(function() {
         $("#search").on('keydown', function() {
             $("#result").html($(this).val());
@@ -235,7 +243,7 @@
             if (search != '') {
                 var container = $("#container");
                 container.empty();
-                searchByClient(search).then((result) => {
+                searchClient(search).then((result) => {
                     createParagrapDinamically(result);
                 }).catch((err) => {
 
