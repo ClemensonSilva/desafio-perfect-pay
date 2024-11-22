@@ -104,7 +104,7 @@ class Sales extends Controller
         $inputForm = $request->validate(['search' => 'required']);
         $search = $inputForm['search'];
         $products = $producContoller->get_products_data();
-        $sales = json_encode(get_especific_sales_by_client_product($search));
+        $sales = json_encode($this->get_especific_sales_by_client_product($search));
 
         return view('dashboard', compact('products','sales', ))->with(['message','Resultados encontrados']);
     }
@@ -129,7 +129,7 @@ class Sales extends Controller
         }
     }
 
-   public function get_sales_data($id = false, $paginate = 10)
+   public function get_sales_data($id = false, $paginate = 7)
 {
     if ($id) {
         $sales =  DB::select('SELECT client_products.*, client.name as client_name,
@@ -141,10 +141,18 @@ class Sales extends Controller
         $sales = DB::select('SELECT client_products.*, client.name as client_name,
          products.name as products_name, products.price as products_price FROM 
          client_products INNER JOIN client ON client_products.client_id =  client.id  
-         INNER JOIN products ON client_products.product_id = products.id LIMIT :paginate OFFSET 0',['paginate'=>$paginate]);
+         INNER JOIN products ON client_products.product_id = products.id ORDER BY RAND() LIMIT :paginate OFFSET 0',['paginate'=> $paginate]);
         
     }
     return json_encode($sales);
+}
+function get_especific_sales_by_client_product($search, $pagination = 15)
+{
+    $result = DB::select("SELECT client_products.*, client.name as client_name,
+         products.name as products_name, products.price as products_price FROM 
+         client_products INNER JOIN client ON client_products.client_id =  client.id  
+         INNER JOIN products ON client_products.product_id = products.id WHERE client.name like '%{$search}%' LIMIT :paginate OFFSET 0 ", ['paginate'=>$pagination] );
+    return $result;
 }
 function get_sales_betwen_dates($initialDate, $finalDate)
 {

@@ -18,21 +18,7 @@ function banco_de_dados_aplicacao($date_from_db)
 }
 
 
-function get_especific_sales_by_client_product($search, $pagination = 5)
-{
-    $result = DB::table('client_products')
-        ->join('client', 'client_products.client_id', '=', 'client.id')
-        ->join('products', 'client_products.product_id', '=', 'products.id')
-        ->where('client.name', 'like', "%{$search}%")
-        ->orWhere('products.name', 'like', "%{$search}%")
-        ->select(
-            'client_products.*',
-            'client.name as client_name',
-            'products.name as products_name',
-            'products.price as products_price'
-        )->get();
-    return $result;
-}
+
 
 
 function get_sales_betwen_dates($initialDate, $finalDate)

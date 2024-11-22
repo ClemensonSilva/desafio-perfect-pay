@@ -16,7 +16,7 @@
     @php
         $products = json_decode($products);
         $sales = json_decode($sales);
-
+        
     @endphp
     <h1>Dashboard de vendas</h1>
     <div class='card mt-3'>
