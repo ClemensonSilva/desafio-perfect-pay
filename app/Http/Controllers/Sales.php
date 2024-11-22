@@ -110,6 +110,7 @@ class Sales extends Controller
     }
     public function searchWithDate(Request $request)
     {
+        try {
         $inputForm = $request->validate(['initialDate' => 'required', 'finalDate' => 'required']);
         $initialDate = $inputForm['initialDate'];
         $finalDate = $inputForm['finalDate'];
@@ -122,6 +123,10 @@ class Sales extends Controller
         $sales = $this->get_sales_betwen_dates($initialDate, $finalDate);
         
         return view('dashboard', compact('products','sales', ))->with(['message','Resultados encontrados']);
+
+        } catch (\Throwable $th) {
+            return redirect('dashboard')->with(['message','Resultados não encontrados']);
+        }
     }
 
    public function get_sales_data($id = false, $paginate = 10)

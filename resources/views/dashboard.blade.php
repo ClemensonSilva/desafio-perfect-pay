@@ -86,6 +86,7 @@
                     <th scope="col">
                         Data
                     </th>
+                  
                     <th scope="col">
                         Valor
                     </th>
@@ -94,22 +95,26 @@
                     </th>
                 </tr>
 
-                @foreach ($sales as $sale)
-                    <tr>
-                        <td>
-                            {{ $sale->products_name }}
-                        </td>
-                        <td>
-                            {{ banco_de_dados_aplicacao($sale->date) }}
-                        </td>
-                        <td>
-                            R${{ $sale->price_sales }},00
-                        </td>
-                        <td>
-                            <a href='/edit-sale/{{ $sale->id }}' class='btn btn-primary'>Editar</a>
-                        </td>
-                    </tr>
-                @endforeach
+                @forelse ($sales as $sale)
+                <tr>
+                    <td>
+                        {{ $sale->products_name }}
+                    </td>
+                    <td>
+                        {{ banco_de_dados_aplicacao($sale->date) }}
+                    </td>
+                    <td>
+                        R${{ $sale->price_sales }},00
+                    </td>
+                    <td>
+                        <a href='/edit-sale/{{ $sale->id }}' class='btn btn-primary'>Editar</a>
+                    </td>
+                </tr>
+                @empty
+                <td>
+                    Nenhuma venda encontrada
+                </td>
+                @endforelse 
             </table>
         </div>
     </div>
@@ -213,7 +218,7 @@
             dataType: "json",
         });
     }
-
+// CRIAR PAGINACAO DE RESULTADOS
     function createParagrapDinamically(result) {
         var i = 0;
         result.forEach(client => {
