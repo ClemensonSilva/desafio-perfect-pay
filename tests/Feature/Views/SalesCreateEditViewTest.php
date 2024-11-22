@@ -48,7 +48,7 @@ class SalesViewTest extends TestCase
         ]);
         $sale = new Sales();
         $sale->create($request); // o id dessa venda sera 1
-        $saleId = $sale->get_sales_data(1)->id;
+        $saleId = json_decode($sale->get_sales_data(1))->id;
         $response = $this->get(route('sales.edit', ['sale' => $saleId]));
         $this->assertEquals(200, $response->getStatusCode());
     }
@@ -58,7 +58,7 @@ class SalesViewTest extends TestCase
         $this->actingAs($user)->withSession(['user_id' => '1', 'role_id' => '2']);
       
         $sale = new Sales();
-        $saleId = $sale->get_sales_data(1)->id;
+        $saleId = $sale->get_sales_data()->id;
         $response = $this->get(route('sales.edit', ['sale' => $saleId]));
         $response->assertStatus(302);
     }
