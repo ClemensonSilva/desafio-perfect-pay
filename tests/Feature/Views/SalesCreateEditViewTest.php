@@ -58,7 +58,7 @@ class SalesViewTest extends TestCase
         $this->actingAs($user)->withSession(['user_id' => '1', 'role_id' => '2']);
       
         $sale = new Sales();
-        $saleId = $sale->get_sales_data()->id;
+        $saleId = json_decode($sale->get_sales_data(1))->id;
         $response = $this->get(route('sales.edit', ['sale' => $saleId]));
         $response->assertStatus(302);
     }
