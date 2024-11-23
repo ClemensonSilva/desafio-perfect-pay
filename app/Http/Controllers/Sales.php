@@ -156,16 +156,10 @@ function get_especific_sales_by_client_product($search, $pagination = 15)
 }
 function get_sales_betwen_dates($initialDate, $finalDate)
 {
-    $sales = DB::table('client_products')
-        ->join('client', 'client_products.client_id', '=', 'client.id')
-        ->join('products', 'client_products.product_id', '=', 'products.id')
-        ->whereBetween('date', [$initialDate, $finalDate])
-        ->select(
-            'client_products.*',
-            'client.name as client_name',
-            'products.name as products_name',
-            'products.price as products_price'
-        )->get();
+    $sales = DB::select("SELECT client_products.*, client.name as client_name,
+    products.name as products_name, products.price as products_price FROM 
+    client_products INNER JOIN client ON client_products.client_id =  client.id  
+    INNER JOIN products ON client_products.product_id = products.id WHERE client_products.date between :initialDate AND :finalDate", ['initialDate'=> $initialDate, 'finalDate'=> $finalDate]);
     return json_encode($sales);
 }
 function aplicacao_banco_de_dados_($date_from_app)

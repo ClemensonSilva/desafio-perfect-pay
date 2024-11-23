@@ -32,7 +32,7 @@ class UsersController extends Controller
                 Session::put('name', $user->name);
                 Session::put('user_id', $user->id);
                 Session::put('role_id', $user->role_id);
-                return redirect('/')->with(['message' => 'Seja bem vindo!', 'user'=> $user->name,  ]);
+                return redirect('/')->with(['message' => 'Seja bem vindo!', 'user'=> $user->name]);
             }
             else{
                 return redirect()->back()->with(['error'=> 'Senha incorreta.']); // retornar os dados do usuario logado
