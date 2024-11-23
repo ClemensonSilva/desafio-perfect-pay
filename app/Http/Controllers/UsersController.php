@@ -13,11 +13,7 @@ class UsersController extends Controller
         return view('registration_users');
     }
     public function indexLogin(){
-        if(session::isStarted() ){
-            return redirect('/')->with(['message' => 'Usuario já logado!' ]);
-        }else {
             return view('login_users');
-        }
     }
     public function login(Request $request){
        

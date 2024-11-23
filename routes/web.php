@@ -50,8 +50,12 @@ VENDAS: GET/POST/UPDATE/EDIT/DELETE
 Route::controller(Sales::class)->group(function (){
     Route::middleware('logged')->group(function (){
         Route::middleware('isAdmin')->group(function (){
+            #Acesso exclusivo de administradores
             Route::get('/edit-sale/{sale}', 'dataToEditSales')->name('sales.show');
             Route::put('/edit-sale/{sale}', 'editSale')->name('sales.edit');
+            Route::get('/metrics', function(){
+                return view('metricsSalesPerson');
+            });
         });
     Route::post('/sales', 'create')->name('create.sale');
     Route::post('/search',  'search')->name('search.sales');
@@ -59,6 +63,10 @@ Route::controller(Sales::class)->group(function (){
     Route::get('/search/client', 'getClientNames')->name('getClientName');
     });
 });
+
+/*
+VENDAS: METRICAS VENDEDORES
+*/
 
 
 
