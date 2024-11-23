@@ -54,8 +54,8 @@ Route::controller(Sales::class)->group(function (){
             Route::put('/edit-sale/{sale}', 'editSale')->name('sales.edit');
         });
     Route::post('/sales', 'create')->name('create.sale');
-    Route::get('/search',  'search')->name('search.sales');
-    Route::get('/searchWithDate', 'searchWithDate')->name('searchDate.sales');
+    Route::post('/search',  'search')->name('search.sales');
+    Route::post('/searchWithDate', 'searchWithDate')->name('searchDate.sales');
     Route::get('/search/client', 'getClientNames')->name('getClientName');
     });
 });

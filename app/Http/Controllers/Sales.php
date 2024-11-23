@@ -88,7 +88,7 @@ class Sales extends Controller
             'price_sales' => $price_sales,
             'status' => $status]);
 
-        return redirect('/')->with(['message','Edicao feita com sucesso!']);
+        return redirect('/')->with(['message'=>'Edicao feita com sucesso!']);
     }
     function getClientNames(Request $request){
         $clientController = new ClientController();
@@ -105,8 +105,8 @@ class Sales extends Controller
         $search = $inputForm['search'];
         $products = $producContoller->get_products_data();
         $sales = json_encode($this->get_especific_sales_by_client_product($search));
-
-        return view('dashboard', compact('products','sales', ))->with(['message','Resultados encontrados']);
+        
+        return view('dashboard')->with(compact('products','sales'))->with('message','Resultados encontrados');
     }
     public function searchWithDate(Request $request)
     {
@@ -122,10 +122,10 @@ class Sales extends Controller
         $products = $producContoller->get_products_data();
         $sales = $this->get_sales_betwen_dates($initialDate, $finalDate);
         
-        return view('dashboard', compact('products','sales', ))->with(['message','Resultados encontrados']);
+        return view('dashboard', compact('products','sales', ))->with(['message'=>'Resultados encontrados']);
 
         } catch (\Throwable $th) {
-            return redirect('dashboard')->with(['message','Resultados não encontrados']);
+            return redirect('dashboard')->with(['message'=>'Resultados não encontrados']);
         }
     }
 

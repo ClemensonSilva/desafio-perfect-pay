@@ -14,6 +14,7 @@
         </div>
     @endif
     @php
+    # criar mais feedbacks para o usuario quanto a operacoes
         $products = json_decode($products);
         $sales = json_decode($sales);
         
@@ -25,7 +26,7 @@
                 <a href='/sales' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i> Nova
                     venda</a>
             </h5>
-            <form action="/search" method="GET">
+            <form action="/search" method="POST">
                 @csrf
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
@@ -51,7 +52,7 @@
                     </div>
                 </div>
             </form>
-            <form action="/searchWithDate" method="GET">
+            <form action="/searchWithDate" method="POST">
                 @csrf
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
