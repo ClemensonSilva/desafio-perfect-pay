@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Cache;
 
@@ -13,6 +12,7 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
         // \App\Models\User::factory(10)->create();
@@ -24,9 +24,9 @@ class DatabaseSeeder extends Seeder
  
         $this->call(ClientTableSeeder::class);
         $this->call(ProductsTableSeeder::class);
-        $this->call(ClientsProductsTableSeeder::class);
-        $this->call(RolesTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
+        $this->call(ClientsProductsTableSeeder::class);
         
         Cache::forget('products-dashboard');    
  

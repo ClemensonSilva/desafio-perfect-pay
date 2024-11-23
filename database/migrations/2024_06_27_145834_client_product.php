@@ -18,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->foreignId('salesperson_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('quantity');
             $table->integer('discount');
             $table->integer('price_sales');
