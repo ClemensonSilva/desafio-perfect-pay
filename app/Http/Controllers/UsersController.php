@@ -13,9 +13,14 @@ class UsersController extends Controller
         return view('registration_users');
     }
     public function indexLogin(){
-        return view('login_users');
+        if(session::isStarted() ){
+            return redirect('/')->with(['message' => 'Usuario já logado!' ]);
+        }else {
+            return view('login_users');
+        }
     }
     public function login(Request $request){
+       
         $input = $request->validate([
             'email'=> 'required|unique:client',
             'password'=> 'required|min:8',
