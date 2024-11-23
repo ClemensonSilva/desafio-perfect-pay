@@ -13,7 +13,6 @@
     </div>
     @endif
     @php
-    
         $clients = (json_decode($clients));
         $products = json_decode($products);
     @endphp
@@ -52,7 +51,7 @@
                     <label for="product">Produto</label>
                     <select id="product" name="product_id"  class="form-control">
                         @foreach ($products as $product)
-                        <option value = "{{$product->id}}">{{$product->name}} -  por apenas R$ {{$product->price}},00</option>
+                        <option value = "{{$product->id}}"> {{$product->name}} - por apenas R$ {{$product->price}},00</option>
                         @endforeach
                     </select>
                 </div>
@@ -67,6 +66,9 @@
                 <div class="form-group">
                     <label for="discount">Desconto</label>
                     <input type="text" class="form-control" id="discount" name="discount" placeholder="100,00 ou menor">
+                </div>
+                <div>
+                    <input type="hidden" name="salesPerson" value={{Session::get('user_id')}}>
                 </div>
                 @php
                     $status = ['Aprovado', 'Cancelado', 'Devolvido'];

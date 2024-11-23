@@ -16,6 +16,7 @@ class Sales extends Controller
             [
                 'client_id' =>   'required',
                 'product_id' =>   'required',
+                'salesPerson'=>'required',
                 'date' =>   'required',
                 'quantity' =>   'required',
                 'discount' =>   'required',
@@ -29,6 +30,8 @@ class Sales extends Controller
         $quantity = strip_tags($inputForm['quantity']);
         $discount = strip_tags($inputForm['discount']);
         $status = strip_tags($inputForm['status']);
+        $salesPerson = strip_tags($inputForm['salesPerson']);
+
         $product = Product::find($inputForm['product_id']);
         $discount = validandoDesconto( $product->price,$discount);
         $price_sales = salesPrice($quantity, $discount, $product->price);
@@ -41,6 +44,7 @@ class Sales extends Controller
         $product->clients()->attach($client->id,
             [
                 'quantity' => $quantity,
+                'salesperson_id'=> $salesPerson,
                 'date' => $dateFormat,
                 'discount' => $discount,
                 'price_sales' => $price_sales,

@@ -21,6 +21,7 @@ class ClientController extends Controller
         $inputForm['cpf'] = strip_tags($inputForm['cpf'] );
 
         Client::create($inputForm);
+        Cache::forget('clients');
         return redirect('/sales');
     }
 
