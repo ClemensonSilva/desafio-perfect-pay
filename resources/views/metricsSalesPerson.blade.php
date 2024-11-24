@@ -14,8 +14,6 @@
         </div>
     @endif
     @php
-   
-        
     @endphp
     <h1>Desempenho</h1>
     <div class='card mt-3'>
@@ -76,6 +74,13 @@
                 </tr>
               
             </table>
+            <div>
+                <p>  *Proximidade da meta de vendas: mede o quão proximo o vendedor esta de sua meta no período
+                </p>
+                <p>*Taxa de vendas bem sucedidas: Calcula a porcentagem de vendas com status 'Sucesso' 
+                    frente ao total de vendas que poderiam, dentro do prazo, serem canceladas;</p>
+            </div>
+
         </div>
     </div>
   
