@@ -17,8 +17,6 @@ Este projeto em forma de desafio consiste em um aplicativo para gerenciamento de
 - Para rodar esse projeto em sua máquina, você precisar ter instalado:
 
 ```
-PHP versão > 8.2
-Composer
 Docker
 ```
 
