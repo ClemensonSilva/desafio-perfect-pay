@@ -7,7 +7,7 @@ use App\Http\Controllers\Sales;
 use App\Http\Controllers\UsersController;
 
 /*
-USUARIOS: GET/POST/UPDATE/DELETE    
+USUARIOS: GET/POST/UPDATE/DELETE
 */
 Route::controller(UsersController::class)->group(function (){
     Route::middleware('isAdmin')->group(function (){
@@ -56,10 +56,10 @@ Route::controller(Sales::class)->group(function (){
             Route::get('/metrics', function(){
                 return view('metricsSalesPerson');
             });
+            Route::post('/searchWithDate', 'searchWithDate')->name('searchDate.sales');
         });
     Route::post('/sales', 'create')->name('create.sale');
     Route::post('/search',  'search')->name('search.sales');
-    Route::post('/searchWithDate', 'searchWithDate')->name('searchDate.sales');
     Route::get('/search/client', 'getClientNames')->name('getClientName');
     });
 });
@@ -67,6 +67,3 @@ Route::controller(Sales::class)->group(function (){
 /*
 VENDAS: METRICAS VENDEDORES
 */
-
-
-
