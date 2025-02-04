@@ -17,7 +17,11 @@
     # criar mais feedbacks para o usuario quanto a operacoes
         $products = json_decode($products);
         $sales = json_decode($sales);
-        
+        if(isset($balanceOfSales)){
+            $balanceOfSales = json_decode($balanceOfSales);
+        }
+
+
     @endphp
     <h1>Dashboard de vendas</h1>
     <div class='card mt-3'>
@@ -37,13 +41,13 @@
                             <input type="text" class="form-control  " id="search" >
                         </div>
                     </div>
-                   
+
                 </div>
                 <div class="form-row align-items-center">
                     <div class="col-sm-5 my-1">
                         <select id="container" class="form-control" name="search">
-        
-                        </select>   
+
+                        </select>
                     </div>
                     <div class="col-sm-1 my-1">
                         <button type="submit" class="btn btn-primary" style='padding: 14.5px 16px;'>
@@ -52,6 +56,7 @@
                     </div>
                 </div>
             </form>
+
             <form action="/searchWithDate" method="POST">
                 @csrf
                 <div class="form-row align-items-center">
@@ -75,10 +80,39 @@
                     <div class="col-sm-1 my-1">
                         <button type="submit" class="btn btn-primary" style='padding: 14.5px 16px;'>
                             <i class='fa fa-search'></i>
-                        </button>   
+                        </button>
                     </div>
                 </div>
             </form>
+            @isset($balanceOfSales)
+            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+            <script type="text/javascript">
+              google.charts.load('current', {'packages':['corechart']});
+              google.charts.setOnLoadCallback(drawChart);
+              var losts = parseFloat("<?php echo $balanceOfSales->losts; ?>");
+              var gains = parseFloat("<?php echo $balanceOfSales->totalSales; ?>");
+              function drawChart() {
+
+                var data = google.visualization.arrayToDataTable([
+                  ['Task', 'Hours per Day'],
+                  ['Ganhos', gains],
+                  ['Perdas', losts],
+                ]);
+
+                var options = {
+                  title: 'Status das vendas'
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                chart.draw(data, options);
+              }
+            </script>
+                <body>
+                    <div id="piechart" style="width: 900px; height: 250px;"></div>
+                </body>
+            @endisset
+
             <table class='table'>
                 <tr>
                     <th scope="col">
@@ -87,7 +121,7 @@
                     <th scope="col">
                         Data
                     </th>
-                  
+
                     <th scope="col">
                         Valor
                     </th>
@@ -115,7 +149,7 @@
                 <td>
                     Nenhuma venda encontrada
                 </td>
-                @endforelse 
+                @endforelse
             </table>
         </div>
     </div>
