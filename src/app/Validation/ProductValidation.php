@@ -3,7 +3,8 @@
 namespace App\Validation;
 
 use App\Models\Product;
-use http\Env\Request;
+use Illuminate\Http\Request;
+
 
 class ProductValidation
 {

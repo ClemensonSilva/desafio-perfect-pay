@@ -16,7 +16,7 @@ class ProductRepository
         $this->productValidation = $productValidation;
     }
     public function createProductRepository(Request $request):void{
-        $productData = $this->productValidation->productValidation($request);
+        $productData = $this->productValidation->validateProduct($request);
         Product::create($productData);
     }
     public function editProductRepository(int $id,Request $request): void

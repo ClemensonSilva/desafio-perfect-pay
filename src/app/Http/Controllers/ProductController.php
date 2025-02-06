@@ -19,7 +19,7 @@ class ProductController extends Controller
     public function create(Request $request)
   {
     $this->productService->createProductServices($request);
-    return redirect('/products')->with(['message' => 'roduto cadastrado com sucesso!']);
+    return redirect('/products')->with(['message' => 'Produto cadastrado com sucesso!']);
   }
     public function showProduct(Product $product)
     {
