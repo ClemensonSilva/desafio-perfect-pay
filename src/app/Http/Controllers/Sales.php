@@ -54,7 +54,7 @@ class Sales extends Controller
     public function dataToEditSales($id)
     {
         $controllerProduct = new ProductController();
-        $products = $controllerProduct->get_products_data();
+        $products = $controllerProduct->get_all_product_data();
 
         $sale = $this->get_sales_data($id);
         return view("edit_sales", compact("sale", "products")); // parei aqui
@@ -139,7 +139,7 @@ class Sales extends Controller
         $producContoller = new ProductController();
         $inputForm = $request->validate(["search" => "required"]);
         $search = $inputForm["search"];
-        $products = $producContoller->get_products_data();
+        $products = $producContoller->get_all_product_data();
         $sales = json_encode(
             $this->get_especific_sales_by_client_product($search)
         );
@@ -162,7 +162,7 @@ class Sales extends Controller
             $finalDate = aplicacao_banco_de_dados_($finalDate);
 
             $producContoller = new ProductController();
-            $products = $producContoller->get_products_data();
+            $products = $producContoller->get_all_product_data();
             $sales = $this->get_sales_betwen_dates($initialDate, $finalDate);
             $balanceOfSales = $this->lostCalculation(json_decode($sales));
             return view("dashboard", compact("products", "sales" , "balanceOfSales"))->with([

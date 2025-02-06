@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\ClientRepository;
 use App\Repositories\UserRepository;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class ClientServices
@@ -12,7 +13,7 @@ class ClientServices
     public function __construct(ClientRepository $clientRepository){
         $this->clientRepository =  $clientRepository; // instanciando a classe
     }
-    public  function createClient($request)
+    public  function createClient(Request $request)
     {
         $this->clientRepository->createClient($request);
         Cache::forget('clients');

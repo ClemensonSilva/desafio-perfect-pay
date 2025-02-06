@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    private $clientServices;
+    private ClientServices $clientServices;
     public function __construct(ClientServices $clientServices)
     {
         $this->clientServices = $clientServices;
