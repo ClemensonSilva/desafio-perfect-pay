@@ -10,18 +10,23 @@ use Illuminate\Support\Facades\DB;
 
 class ClientRepository
 {
-    public static function  createClient(Request $request): void
+    private ClientValidation $clientValidation;
+    public function __construct(ClientValidation $validation)
     {
-        $userData = ClientValidation::validateClient($request);
+        $this->clientValidation = $validation;
+    }
+    public  function  createClient(Request $request): void
+    {
+        $userData = $this->clientValidation->validateClient($request);
         Client::create($userData);
     }
-    public static function getClients():array {
+    public  function getClients():array {
         $clients = Cache::remember('clients', 60*30, function(){
             return DB::select('select * FROM client ORDER BY name');
         });
         return $clients;
     }
-    public static function searchClient(string $clientName):string {
+    public  function searchClient(string $clientName):string {
         $client = DB::select("SELECT * FROM client WHERE name LIKE CONCAT ('%', :name, '%')", ['name'=>$clientName]);
         return json_encode($client);
     }

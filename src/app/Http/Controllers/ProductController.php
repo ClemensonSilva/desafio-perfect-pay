@@ -67,7 +67,7 @@ class ProductController extends Controller
     $productDescription = $input['description'];
     $productPrice = $input['price'];
     DB::table('products')->where('id', $id->id)->update(['name'=> $productName, 'description' => $productDescription, 'price'=> $productPrice]);
-    Cache::forget('products-dashboard');    
+    Cache::forget('products-dashboard');
     return redirect('/')->with(['message' =>  'Produto atualizado com sucesso!']);
   }
 // APLICAR SOFTDELTE NOS PRODUTOS

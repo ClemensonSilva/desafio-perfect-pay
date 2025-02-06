@@ -7,14 +7,19 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    private $clientServices;
+    public function __construct(ClientServices $clientServices)
+    {
+        $this->clientServices = $clientServices;
+    }
     public function create(Request $request){
-        ClientServices::CreateClient($request);
+        $this->clientServices->createClient($request);
         return redirect('/sales');
     }
     public function getClients(){
-      return  ClientServices::getClients();
+      return  $this->clientServices->getClients();
     }
     public function searchClient($clientName){
-     return  ClientServices::searchClient($clientName);
+     return  $this->clientServices->searchClient($clientName);
     }
 }

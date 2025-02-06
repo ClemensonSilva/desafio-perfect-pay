@@ -8,16 +8,19 @@ use Illuminate\Support\Facades\Cache;
 
 class ClientServices
 {
-    public static function CreateClient($request)
+    private  ClientRepository $clientRepository; // criando atributo cujo tipo é a classe ClientRepository
+    public function __construct(ClientRepository $clientRepository){
+        $this->clientRepository =  $clientRepository; // instanciando a classe
+    }
+    public  function createClient($request)
     {
-        ClientRepository::createClient($request);
+        $this->clientRepository->createClient($request);
         Cache::forget('clients');
-
     }
-    public static function getClients(){
-        return ClientRepository::getClients();
+    public  function getClients(){
+        return $this->clientRepository->getClients();
     }
-    public static function searchClient($clientName){
-        return ClientRepository::searchClient($clientName);
+    public  function searchClient($clientName){
+        return $this->clientRepository->searchClient($clientName);
     }
 }
