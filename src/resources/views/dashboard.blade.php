@@ -231,6 +231,11 @@
                     </tr>
                 @endforeach
             </table>
+
+            <form action="/cadastro" method="GET">
+                @csrf
+                <button type="submit" class='btn btn-primary'>Cadastrar novos vendedores</button>
+            </form>
             <form action="/deslogar" method="GET">
                 @csrf
                 <button type="submit" class='btn btn-danger'>Deslogar</button>
