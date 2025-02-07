@@ -12,7 +12,6 @@
     {
         private SalesServices $salesServices;
 
-
         public function __construct(SalesServices $salesServices)
         {
             $this->salesServices = $salesServices;
