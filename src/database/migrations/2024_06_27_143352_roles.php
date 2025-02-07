@@ -5,8 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
-{preciso resolver apenas o problema de jogar isso para o github
-    /**
+{   /**
      * Run the migrations.
      *
      * @return void
