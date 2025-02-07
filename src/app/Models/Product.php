@@ -21,7 +21,10 @@ class Product extends Model
         'price'
     ];
     protected $table = 'products';
-    public function clients() 
+
+
+
+    public function clients()
     {
         return $this->belongsToMany(Client::class, 'client_products','product_id', 'client_id' )->withPivot('quantity', 'discount','price_sales', 'status','date', 'created_at');
     }

@@ -32,13 +32,11 @@ class ProductController extends Controller
     $clients = $this->productService->showSalesClientsServices();
     return view('crud_sales', compact('products', 'clients'));
   }
-//PRECISO VOLTAR AQUI PARA CORRIGIR O get_sales_data()
   public function showDashboard()
   {
-    $controllerSale = new Sales();
     $products = $this->productService->getAllProductServices();
     $clients = $this->productService->showSalesClientsServices();
-    $sales = ($controllerSale->get_sales_data());
+    $sales =  $this->productService->getSalesServices();
     return view('dashboard', compact('products', 'sales', 'clients'));
   }
 
