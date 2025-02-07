@@ -21,7 +21,7 @@ class ClientServices
     public  function getClients(){
         return $this->clientRepository->getClients();
     }
-    public  function searchClient($clientName){
+    public  function searchClient(string $clientName){
         return $this->clientRepository->searchClient($clientName);
     }
 }
