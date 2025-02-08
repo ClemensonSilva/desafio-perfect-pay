@@ -36,13 +36,17 @@ class ProductRepository
             return DB::select("select * from products where id = {$id}");
         });
         return json_encode($products);
-
     }
-    public function getAllProductsRepository():string
+    public function getAllProductsRepository(int $limit = 20):string
     {
-        $products = Cache::remember('products-dashboard', 60 * 0.5, function () {
-            return DB::select('select * from products LIMIT 20 OFFSET 0');
+        $products = Cache::remember('products-dashboard', 60 * 0.5, function () use ($limit){
+            return DB::select("select * from products ORDER BY name LIMIT {$limit} OFFSET 0 ");
         });
         return json_encode($products);
+    }
+    public function topSalledProductsRepository()
+    {
+        $products = json_decode($this->getAllProductsRepository(20), true);
+        dd($products);
     }
 }

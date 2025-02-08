@@ -11,7 +11,6 @@ class ProductServices
 {
     private ProductRepository $productRepository;
     private ClientServices $clientServices;
-    // NAO DEVIA HAVER CJAMADA DE SERVICOS AQ DENTRO
     private SalesRepository $salesRepository;
     public function __construct(ProductRepository $productRepository,  ClientServices $clientServices, SalesRepository $salesRepository)
     {
@@ -32,7 +31,7 @@ class ProductServices
     public function deleteProductService(Product $product):void
     {
         $this->productRepository->deleteProductRepository($product);
-    }//VOU TER QUE PRCURAR AS APPLICACOES DESSA FUNCAO
+    }
     public function getProductServices(int $id):string
     {
           return $this->productRepository->getProductRepository($id);
@@ -49,5 +48,8 @@ class ProductServices
     {
         return $this->salesRepository->getSalesRepository();
     }
-
+    public function topSalledProductsRepository()
+    {
+        return $this->productRepository->topSalledProductsRepository();
+    }
 }
