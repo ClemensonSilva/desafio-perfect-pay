@@ -56,9 +56,8 @@
                 $products = $this->salesServices->getAllProducts();
                 $sales = $this->salesServices->searchWithDateServices($request);
                 $balanceOfSales = $this->salesServices->lostCalculation(\json_decode($sales));
-                return view("dashboard", compact("products", "sales", "balanceOfSales"))->with([
-                    "message" => "Resultados encontrados",
-                ]);
+                $this->salesServices->feedback(json_decode($balanceOfSales));
+                return view("dashboard", compact("products", "sales", "balanceOfSales"));
             } catch (\Throwable $th) {
                 return redirect("dashboard")->with([
                     "message" => "Resultados não encontrados",

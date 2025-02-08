@@ -120,7 +120,7 @@ class SalesRepository
             'SELECT client_products.*, client.name as client_name,
          products.name as products_name, products.price as products_price FROM
          client_products INNER JOIN client ON client_products.client_id =  client.id
-         INNER JOIN products ON client_products.product_id = products.id ORDER BY RAND() LIMIT :paginate OFFSET 0',
+         INNER JOIN products ON client_products.product_id = products.id ORDER BY client_products.date  DESC LIMIT :paginate OFFSET 0',
             ["paginate" => $paginate]
         ));
     }

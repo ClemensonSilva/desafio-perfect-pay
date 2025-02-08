@@ -7,6 +7,12 @@
 
         </div>
     @endif
+    @if (session()->has('messageAlert'))
+        <div class="alert alert-info">
+            {{ session('messageAlert') }}
+            {{ session('user') }}
+        </div>
+    @endif
     @if (session()->has('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
@@ -20,8 +26,6 @@
         if(isset($balanceOfSales)){
             $balanceOfSales = json_decode($balanceOfSales);
         }
-
-
     @endphp
     <h1>Dashboard de vendas</h1>
     <div class='card mt-3'>
@@ -30,6 +34,7 @@
                 <a href='/sales' class='btn btn-secondary float-right btn-sm rounded-pill'><i class='fa fa-plus'></i> Nova
                     venda</a>
             </h5>
+            <h5>Histórico do cliente</h5>
             <form action="/search" method="POST">
                 @csrf
                 <div class="form-row align-items-center">
@@ -56,7 +61,7 @@
                     </div>
                 </div>
             </form>
-
+            <h5>Resultados de venda em determinado período</h5>
             <form action="/searchWithDate" method="POST">
                 @csrf
                 <div class="form-row align-items-center">
@@ -85,32 +90,34 @@
                 </div>
             </form>
             @isset($balanceOfSales)
-            <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-            <script type="text/javascript">
-              google.charts.load('current', {'packages':['corechart']});
-              google.charts.setOnLoadCallback(drawChart);
-              var losts = parseFloat("<?php echo $balanceOfSales->losts; ?>");
-              var gains = parseFloat("<?php echo $balanceOfSales->totalSales; ?>");
-              function drawChart() {
+                @if($balanceOfSales->losts ==0 && $balanceOfSales->totalSales==0)
+                    <h5>Nenhuma venda encontrada</h5>
+                @else
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
+                        var losts = parseFloat("<?php echo $balanceOfSales->losts; ?>");
+                        var gains = parseFloat("<?php echo $balanceOfSales->totalSales; ?>");
+                        function drawChart() {
 
-                var data = google.visualization.arrayToDataTable([
-                  ['Task', 'Hours per Day'],
-                  ['Ganhos', gains],
-                  ['Perdas', losts],
-                ]);
+                            var data = google.visualization.arrayToDataTable([
+                                ['Task', 'Hours per Day'],
+                                ['Ganhos', gains],
+                                ['Perdas', losts],
+                            ]);
 
-                var options = {
-                  title: 'Status das vendas'
-                };
+                            var options = {
+                                title: 'Status das vendas'
+                            };
 
-                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-                chart.draw(data, options);
-              }
-            </script>
-                <body>
+                            chart.draw(data, options);
+                        }
+                    </script>
                     <div id="piechart" style="width: 900px; height: 250px;"></div>
-                </body>
+                @endif
             @endisset
 
             <table class='table'>
@@ -153,37 +160,37 @@
             </table>
         </div>
     </div>
-    <div class='card mt-3'>
-        <div class='card-body'>
-            <h5 class="card-title mb-5">Resultado de vendas</h5>
-            <table class='table'>
-                <tr>
-                    <th scope="col">
-                        Status
-                    </th>
-                    <th scope="col">
-                        Quantidade
-                    </th>
-                    <th scope="col">
-                        Preço com desconto
-                    </th>
-                </tr>
-                @foreach ($sales as $sale)
-                    <tr>
-                        <th scope="col">
-                            {{ $sale->status }}
-                        </th>
-                        <th scope="col">
-                            {{ $sale->quantity }}
-                        </th>
-                        <th scope="col">
-                            R$ {{ $sale->products_price - $sale->discount }}
-                        </th>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
-    </div>
+{{--    <div class='card mt-3'>--}}
+{{--        <div class='card-body'>--}}
+{{--            <h5 class="card-title mb-5">Resultado de vendas</h5>--}}
+{{--            <table class='table'>--}}
+{{--                <tr>--}}
+{{--                    <th scope="col">--}}
+{{--                        Status--}}
+{{--                    </th>--}}
+{{--                    <th scope="col">--}}
+{{--                        Quantidade--}}
+{{--                    </th>--}}
+{{--                    <th scope="col">--}}
+{{--                        Preço com desconto--}}
+{{--                    </th>--}}
+{{--                </tr>--}}
+{{--                @foreach ($sales as $sale)--}}
+{{--                    <tr>--}}
+{{--                        <th scope="col">--}}
+{{--                            {{ $sale->status }}--}}
+{{--                        </th>--}}
+{{--                        <th scope="col">--}}
+{{--                            {{ $sale->quantity }}--}}
+{{--                        </th>--}}
+{{--                        <th scope="col">--}}
+{{--                            R$ {{ $sale->products_price - $sale->discount }}--}}
+{{--                        </th>--}}
+{{--                    </tr>--}}
+{{--                @endforeach--}}
+{{--            </table>--}}
+{{--        </div>--}}
+{{--    </div>--}}
     <div class='card mt-3'>
         <div class='card-body'>
             <h5 class="card-title mb-5">Produtos

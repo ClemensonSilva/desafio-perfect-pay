@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Adicionar / Editar carro</h1>
-  
+
     @php
             $sale = json_decode($sale);
             $products = json_decode($products);
@@ -23,7 +23,7 @@
                         @endforeach
                     </select>
                 </div>
-                    
+
                 <div class="form-group">
                     <input type="hidden" class="form-control"  id="client_id" value="{{$sale->client_id}}" name="client_id">
                 </div>
@@ -40,7 +40,7 @@
                     <input type="text" class="form-control" id="discount" name="discount" value="{{$sale->discount}}">
                 </div>
                 @php
-                    $status = ['Aprovado', 'Cancelado', 'Devolvido'];
+                    $status = [ 'Cancelado', 'Devolvido'];
                 @endphp
                 <div class="form-group">
                     <label for="status">Status</label>
@@ -54,6 +54,6 @@
                 <button type="submit" class="btn btn-primary">Salvar</button>
             </form>
         </div>
-        
+
     </div>
 @endsection
