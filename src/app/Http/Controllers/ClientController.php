@@ -8,18 +8,25 @@ use Illuminate\Http\Request;
 class ClientController extends Controller
 {
     private ClientServices $clientServices;
+
     public function __construct(ClientServices $clientServices)
     {
         $this->clientServices = $clientServices;
     }
-    public function create(Request $request){
+
+    public function create(Request $request)
+    {
         $this->clientServices->createClient($request);
-        return redirect('/sales');
+        return redirect('/sales')->with('message', "Cliente cadastrado com sucesso!");
     }
-    public function getClients(){
-      return  $this->clientServices->getClients();
+
+    public function getClients()
+    {
+        return $this->clientServices->getClients();
     }
-    public function searchClient($clientName){
-     return  $this->clientServices->searchClient($clientName);
+
+    public function searchClient($clientName)
+    {
+        return $this->clientServices->searchClient($clientName);
     }
 }

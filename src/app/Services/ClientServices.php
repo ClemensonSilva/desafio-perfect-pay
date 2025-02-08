@@ -15,8 +15,8 @@ class ClientServices
     }
     public  function createClient(Request $request)
     {
-        $this->clientRepository->createClient($request);
         Cache::forget('clients');
+        $this->clientRepository->createClient($request);
     }
     public  function getClients(){
         return $this->clientRepository->getClients();
