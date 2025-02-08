@@ -26,6 +26,7 @@
         if(isset($balanceOfSales)){
             $balanceOfSales = json_decode($balanceOfSales);
         }
+
     @endphp
     <h1>Dashboard de vendas</h1>
     <div class='card mt-3'>
@@ -90,21 +91,21 @@
                 </div>
             </form>
             @isset($balanceOfSales)
-                @if($balanceOfSales->losts ==0 && $balanceOfSales->totalSales==0)
+                @if($balanceOfSales->lost ==0 && $balanceOfSales->totalSales==0)
                     <h5>Nenhuma venda encontrada</h5>
                 @else
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
                         google.charts.load('current', {'packages':['corechart']});
                         google.charts.setOnLoadCallback(drawChart);
-                        var losts = parseFloat("<?php echo $balanceOfSales->losts; ?>");
-                        var gains = parseFloat("<?php echo $balanceOfSales->totalSales; ?>");
+                        var lost = parseFloat("<?php echo $balanceOfSales->lost; ?>");
+                        var gain = parseFloat("<?php echo $balanceOfSales->totalSales; ?>");
                         function drawChart() {
 
                             var data = google.visualization.arrayToDataTable([
                                 ['Task', 'Hours per Day'],
-                                ['Ganhos', gains],
-                                ['Perdas', losts],
+                                ['Ganhos', gain],
+                                ['Perdas', lost],
                             ]);
 
                             var options = {
@@ -289,7 +290,7 @@
         $("#search").val(selectedText)
     })
     $(document).ready(function() {
-        $("#search").on('keydown', function() {
+        $("#search").on('keyup', function() {
             $("#result").html($(this).val());
             var search = $(this).val();
             if (search != '') {
