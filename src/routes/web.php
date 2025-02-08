@@ -41,7 +41,6 @@ Route::controller(ProductController::class)->group(function (){
         });
         Route::get('/', 'showDashboard');
         Route::get('/sales',  'showSales');
-
     });
 });
 /*

@@ -33,7 +33,8 @@ class UserValidation
 
         return $input;
     }
-   public function crypted($password){
+   public function crypted($password):false|null|string
+   {
         return password_hash($password, PASSWORD_DEFAULT);
     }
 

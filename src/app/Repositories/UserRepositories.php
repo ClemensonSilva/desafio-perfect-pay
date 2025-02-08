@@ -14,7 +14,6 @@ class UserRepositories
         $this->userValidation = $userValidation;
     }
 
-
 public function findUser($email)
 {
     return $user = Users::where('email', $email)->first();
