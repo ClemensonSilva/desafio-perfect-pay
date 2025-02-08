@@ -83,7 +83,7 @@ class SalesServices
             return ['type' => "messageAlert", 'feedback' => "As coisas não foram/estão indo bem nesse período :( Mas não desanime!"];
         } else
         {
-            return ['type' => "message", 'feedback' => "O céu é o limite!"];
+            return ['type' => "message", 'feedback' => "As vendas estão ótimas. O céu é o limite!"];
         }
     }
 
