@@ -29,8 +29,7 @@
             $products = $this->salesServices->getAllProducts();
             $sales = $this->salesServices->getSalesByClientServices($request);
             return view("dashboard")
-                ->with(compact("products", "sales"))
-                ->with("message", "Resultados encontrados");
+                ->with(compact("products", "sales"));
         }
 
         function getClientNames(Request $request):string
@@ -56,7 +55,6 @@
                 $products = $this->salesServices->getAllProducts();
                 $sales = $this->salesServices->searchWithDateServices($request);
                 $balanceOfSales = $this->salesServices->lostCalculation(\json_decode($sales));
-                $this->salesServices->feedback(json_decode($balanceOfSales));
                 return view("dashboard", compact("products", "sales", "balanceOfSales"));
             } catch (\Throwable $th) {
                 return redirect("dashboard")->with([

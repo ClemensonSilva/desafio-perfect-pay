@@ -44,7 +44,9 @@ class SalesServices
 
     public function getSalesByClientServices(Request $request, int $paginate = 15): string
     {
-        return $this->salesRepository->getSalesByClientRepository($request, $paginate);
+        $results =  ($this->salesRepository->getSalesByClientRepository($request, $paginate));
+        $this->feedbackDbOperationsService(json_decode($results));
+        return $results;
     }
 
     public function getClientNamesService(Request $request): string
@@ -52,7 +54,7 @@ class SalesServices
         return $this->salesRepository->getClientNamesRepository($request);
     }
 
-    public function getSalesService(int $paginate = 7): string
+    public function getSalesServices(int $paginate = 7): string
     {
         return $this->salesRepository->getSalesRepository($paginate);
     }
@@ -69,12 +71,14 @@ class SalesServices
                 $totalSales += $priceOfSale;
             }
         }
-        return json_encode(["losts" => $lost, "totalSales" => $totalSales]);
+        $results = ["lost" => $lost, "totalSales" => $totalSales];
+        $this->feedbackSalesServices($results);
+        return json_encode($results);
     }
 
-    public function messageToAdmin(\stdClass $balanceOfSales): array
+    public function messageToAdmin(array $balanceOfSales): array
     {
-        if ($balanceOfSales->losts >= $balanceOfSales->totalSales)
+        if ($balanceOfSales['lost'] >= $balanceOfSales['totalSales'])
         {
             return ['type' => "messageAlert", 'feedback' => "As coisas não foram/estão indo bem nesse período :( Mas não desanime!"];
         } else
@@ -83,12 +87,23 @@ class SalesServices
         }
     }
 
-    public function feedback(\stdClass $feedback)
+    public function feedbackSalesServices(array $feedback)
     {
         session()->forget('message');
         session()->forget('messageAlert');
         $feedback = $this->messageToAdmin($feedback);
         session()->flash(key: $feedback['type'], value: $feedback['feedback']);
 
+    }
+    public function feedbackDbOperationsService(array $results){
+        if(empty($results)){
+            $type = "messageAlert";
+            $message = "Nenhum resultado encontrado!";
+        }else{
+            $type = "message";
+            $message = "Resultados encontrados!";
+        }
+        session()->forget('message');
+        session()->flash(key: $type, value: $message);
     }
 }
