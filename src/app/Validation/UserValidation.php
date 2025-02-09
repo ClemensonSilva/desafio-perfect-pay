@@ -6,12 +6,19 @@ use Illuminate\Http\Request;
 
 class UserValidation
 {
+    private array $required;
+    private array $unique;
+    public function __construct()
+    {
+        $this->required =  ['required'=> "Você deve preencher o  :attribute"];
+        $this->unique = ['unique' => "Já existe um usuário cadastrado com este :attribute"];
+    }
     public function validateUser(Request $request): array
     {
         $input = $request->validate([
-            'email' => 'required|unique:client',
+            'email' => 'required',
             'password' => 'required|min:8',
-        ]);
+        ],  $this->required);
         $input['email'] = strip_tags($input['email']);
         $input['password'] = strip_tags($input['password']);
         return $input;
@@ -19,11 +26,12 @@ class UserValidation
     public function validateCadastro(Request $request): array
     {
         $input = $request->validate([
+            'name' => 'required',
             'email' => 'required|unique:client',
             'password' => 'required|min:8',
             'role_id' => 'required',
-            'name' => 'required',
-        ]);
+            'joined_date' => 'required',
+        ], $this->required, $this->unique);
 
         $input['email'] = strip_tags($input['email']);
         $input['password'] = strip_tags($input['password']);
