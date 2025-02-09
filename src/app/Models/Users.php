@@ -24,11 +24,12 @@ class Users extends Authenticatable
         'role_id',
         'name',
         'email',
+        'joined_date',
         'password',
     ];
     // serve para buscar a funcao de um usuario
     public function role(){
         return $this->belongsTo(Roles::class);
     }
-  
+
 }

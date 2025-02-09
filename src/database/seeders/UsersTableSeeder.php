@@ -19,17 +19,19 @@ class UsersTableSeeder extends Seeder
         $password1 = crypted('atum1234');
         $password2 = crypted('salmao12');
         // usuario para teste
-        Users::factory()->create([ 
+        Users::factory()->create([
             'name' => 'Cristiano Messi',
             'email' => 'cristianomessi@gmail.com',
             'role_id' => 1,
+            'joined_date' => '2021-01-01',
             'password' => $password1, // password
         ]);
-        Users::factory()->create([ 
-         
+        Users::factory()->create([
+
             'name' => 'Neymar Mbappe',
             'email' => 'neymarmbappe@gmail.com',
             'role_id' => 2,
+            'joined_date' => '2021-01-01',
             'password' => $password2, // password
         ]);
     }

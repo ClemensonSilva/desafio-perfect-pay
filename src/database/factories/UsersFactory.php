@@ -27,6 +27,7 @@ class UsersFactory extends Factory
             'name' => fake()->name(),
             'email' => fake()->safeEmail(),
             'role_id' => fake()->randomElement($role),
+            'joined_date' => fake()->date('Y_m_d'),
             'password' => $password, // password
         ];
     }

@@ -37,8 +37,11 @@
                 <select name="role_id"  class="form-control">
                     <option client_id value = "1">Administrador</option>
                     <option client_id value = "2">Vendedor</option>
-                </select>           
+                </select>
              </div>
+            <div class="form-group">
+                <input type="hidden" name="joined_date" value={{date("Y-m-d")}}>
+            </div>
             <button type="submit" class="btn btn-primary">Cadastrar</button>
             <br>
         </form>
