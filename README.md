@@ -1,27 +1,52 @@
-# Desafio Perfect-Pay
 
-Implementação do desafio proposto pela empresa Perfect-pay
+# 🚀 Desafio Perfect-Pay  
 
-## Descrição
+Implementação do desafio proposto pela empresa **Perfect-Pay**.  
 
-Este projeto em forma de desafio consiste em um aplicativo para gerenciamento de vendas. Ele permite ao usuário cadastrar informações de Clientes, Produtos e Vendas feitas em seu negócio.
+---
 
-## Funcionalidades
+## 📌 Descrição  
 
-- `CRUD Produtos`: Operações básicas para a tabela produto.
-- `CRUD Clientes`: Operações básicas para a tabela clientes.
-- `CRUD Vendas`: Operações básicas para a tabela vendas. Em breve será colocada algumas validações para garantir a lógica de negócio das vendas.
-- `Autenticação e histórico de opeações`: Em breve irá ser criado uma funcionalidade que permita que vários usuários tenham acesso ao aplicativo e que suas atividades sejam mapeadas e salvas para futuras consultas.
+Este projeto consiste em um aplicativo para **gerenciamento de vendas**, permitindo ao usuário cadastrar e gerenciar informações de **Clientes, Produtos e Vendas** realizadas no negócio.  
 
-### Pré-requisitos
-- Para rodar esse projeto em sua máquina, você precisar ter instalado:
+Foi desenvolvido seguindo o **padrão MVC (Model-View-Controller)**, garantindo uma arquitetura organizada e modular. Além disso, foram implementadas camadas adicionais para separar responsabilidades:  
 
-```
-Docker
-```
+- **Layer de Validação**: Garante que os dados recebidos atendam às regras de negócio.  
+- **Layer de Repositório**: Responsável pelo acesso ao banco de dados, desacoplando a lógica da aplicação.  
+- **Layer de Serviço**: Contém a lógica de negócio, facilitando a reutilização e manutenção do código.  
 
-###  Instalação
-- Rodar os comandos
+Essa abordagem melhora a escalabilidade e a testabilidade do sistema.  
+
+---
+
+## 🛠️ Funcionalidades  
+
+- **CRUD Produtos**: Operações básicas para gerenciamento de produtos.  
+- **CRUD Clientes**: Operações básicas para gerenciamento de clientes.  
+- **CRUD Vendas**: Operações básicas para gerenciamento de vendas. *(Em breve, serão adicionadas validações para garantir a lógica de negócio.)*  
+- **Autenticação e Controle de Acesso**:  
+  - **Admins**: Possuem acesso total ao sistema e podem realizar todas as operações.  
+  - **Vendedores**: Podem apenas adicionar novos produtos, clientes e vendas.  
+- **Live Search**: Pesquisa dinâmica de registros sem necessidade de recarregar a página.  
+- **Filtro de Data**: Permite que o admin busque vendas realizadas dentro de um período específico.  
+- **Dashboard de Análise de Vendas**:  
+  - Exibe um panorama das vendas realizadas.  
+  - Permite verificar se um determinado período foi de **lucro** para a empresa ou se houve **perdas** (vendas canceladas, devolvidas).  
+
+---
+
+## 📌 Pré-requisitos  
+
+Para rodar este projeto em sua máquina, é necessário ter instalado:  
+
+- **Docker**  
+
+---
+
+## ⚙️ Instalação  
+
+1. Clone o repositório e acesse a pasta do projeto.  
+2. Execute os seguintes comandos:  
 
 ```
 docker compose build
